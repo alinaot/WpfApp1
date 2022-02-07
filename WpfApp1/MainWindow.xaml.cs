@@ -51,6 +51,7 @@ namespace WpfApp1
         {
             if (CmbFilter.SelectedItem == null)
                 return;
+            
             var gender = CmbFilter.SelectedItem as Gender;
             List<Client> clients = context.Clients.ToList();
             if (cmbSelectCount.SelectedIndex == 3)
@@ -58,13 +59,25 @@ namespace WpfApp1
                 clients = context.Clients.ToList();
                 countPages = 1;
             }
-            else
-            {
-                clients = context.Clients.Where(x => x.Gender.Code == gender.Code).OrderBy(x => x.ID).Skip(currentPage * countRecord - countRecord).Take(countRecord).ToList();
+
+                if (txtEmail.Text != "")
+                {
+                    clients = clients.Where(x => x.Email.Contains(txtEmail.Text)).ToList();
+                }
+                if (txtPhone.Text != "")
+                {
+                    clients = clients.Where(x => x.Phone.Contains(txtPhone.Text)).ToList();
+                }
+                if (txtName.Text != "")
+                {
+                    clients = clients.Where(x => x.FirstName.ToLower().Contains(txtName.Text.ToLower())
+                                                ||x.LastName.ToLower().Contains(txtName.Text.ToLower()) 
+                                                ||x.Patronymic.ToLower().Contains(txtName.Text.ToLower())).ToList();
+                }
+                clients = clients.Where(x => x.Gender.Code == gender.Code).OrderBy(x => x.ID).Skip(currentPage * countRecord - countRecord).Take(countRecord).ToList();
                 countPages = context.Clients.Where(x => x.Gender.Code == gender.Code).Count() / countRecord;
-            }
-            
-            setEnableButtons(countPages);
+
+            setEnableButtons();
             CurrentPage.Text = currentPage + " из " + countPages;
             dgClients.ItemsSource = clients;
         }
@@ -127,7 +140,7 @@ namespace WpfApp1
             
         }
 
-        private void setEnableButtons(int pages)
+        private void setEnableButtons()
         {
             if (countPages == 1 || countPages == 0)
             {
@@ -145,13 +158,18 @@ namespace WpfApp1
         }
         private void showRecord_Click(object sender, RoutedEventArgs e)
         {
-            setEnableButtons(countPages);
+            setEnableButtons();
             ShowTable();
         }
 
         private void CmbFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             currentPage = 1;
+            ShowTable();
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
             ShowTable();
         }
     }

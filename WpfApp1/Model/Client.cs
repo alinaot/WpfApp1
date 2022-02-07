@@ -38,5 +38,12 @@ namespace WpfApp1.Model
         public virtual ICollection<ClientService> ClientServices { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tag> Tags { get; set; }
+        public string FullName
+        {
+            get
+            {
+                return FirstName + " " + LastName + " " + Patronymic;
+            }
+        }
     }
 }

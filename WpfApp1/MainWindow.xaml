@@ -17,6 +17,9 @@
             <Button x:Name="DeleteData" Click="DeleteData_Click">Удалить клиента</Button>
 
             <ComboBox Name="CmbFilter" SelectionChanged="CmbFilter_SelectionChanged" SelectedIndex="0" ItemsSource="{Binding Gender}" DisplayMemberPath="Name"></ComboBox>
+            <TextBox Width="100" Text="{Binding FullName}" TextChanged="TextBox_TextChanged" Name="txtName"/>
+            <TextBox Width="100" Text="{Binding Email}" TextChanged="TextBox_TextChanged" Name="txtEmail"/>
+            <TextBox Width="100" Text="{Binding Phone}" TextChanged="TextBox_TextChanged" Name="txtPhone"/>
         </StackPanel>
         <DataGrid x:Name="dgClients" AutoGenerateColumns="False" ColumnWidth="*" IsReadOnly="True" Grid.Row="1">
             <DataGrid.Columns>
