@@ -7,6 +7,58 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <Button x:Name="AddData" Click="AddData_Click">Добавить клиента</Button>
+            <Button x:Name="DeleteData" Click="DeleteData_Click">Удалить клиента</Button>
+        </StackPanel>
+        <DataGrid x:Name="dgClients" AutoGenerateColumns="False" ColumnWidth="*" IsReadOnly="True" Grid.Row="1">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding ID}"/>
+                <DataGridTextColumn Header="Gender" Binding="{Binding Gender.Name}"/>
+                <DataGridTextColumn Header="FirstName" Binding="{Binding FirstName}"/>
+                <DataGridTextColumn Header="LastName" Binding="{Binding LastName}"/>
+                <DataGridTextColumn Header="Patronymic" Binding="{Binding Patronymic}"/>
+                <DataGridTextColumn Header="Birthday" Binding="{Binding Birthday}"/>
+                <DataGridTextColumn Header="Phone" Binding="{Binding Phone}"/>
+                <DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
+                <DataGridTextColumn Header="RegistrationDate" Binding="{Binding RegistrationDate}"/>
+                <DataGridTextColumn Header="LastDate"/>
+                <DataGridTextColumn Header="CountVisit"/>
+                <DataGridTemplateColumn Header="Tags">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                                <ListView x:Name="lvTags" ItemsSource="{Binding Tags}">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Background="{Binding colorTag}" Text="{Binding Title}"/>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
+            <ComboBox x:Name="cmbSelectCount" SelectionChanged="cmbSelectCount_SelectionChanged" Margin="5">
+                <TextBlock>10</TextBlock>
+                <TextBlock>50</TextBlock>
+                <TextBlock>200</TextBlock>
+                <TextBlock>Все</TextBlock>
+            </ComboBox>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="PrevPage" Click="PrevPage_Click" Content="Предыдущая страница"></Button>
+                <TextBlock x:Name="CurrentPage"></TextBlock>
+                <Button x:Name="NextPage" Click="NextPage_Click"  Content="Следующая страница"></Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="Records"></TextBlock>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>
