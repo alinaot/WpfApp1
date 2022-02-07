@@ -35,7 +35,7 @@
                                 <ListView x:Name="lvTags" ItemsSource="{Binding Tags}">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
-                                            <TextBlock Background="{Binding colorTag}" Text="{Binding Title}"/>
+                                            <TextBlock Background="{Binding colorTag}" Text="{Binding Title}" Foreground="White"/>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
                                 </ListView>
@@ -45,12 +45,15 @@
             </DataGrid.Columns>
         </DataGrid>
         <StackPanel Orientation="Horizontal" Grid.Row="2">
-            <ComboBox x:Name="cmbSelectCount" SelectionChanged="cmbSelectCount_SelectionChanged" Margin="5">
-                <TextBlock>10</TextBlock>
+            <ComboBox x:Name="cmbSelectCount" SelectionChanged="cmbSelectCount_SelectionChanged" Margin="5" Width="100">
+                <ComboBoxItem IsSelected="True">
+                    <TextBlock>10</TextBlock>
+                </ComboBoxItem>
                 <TextBlock>50</TextBlock>
                 <TextBlock>200</TextBlock>
                 <TextBlock>Все</TextBlock>
             </ComboBox>
+            <Button x:Name="showRecord" Click="showRecord_Click" Content="Показать"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button x:Name="PrevPage" Click="PrevPage_Click" Content="Предыдущая страница"></Button>
                 <TextBlock x:Name="CurrentPage"></TextBlock>
