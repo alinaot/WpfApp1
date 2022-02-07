@@ -15,6 +15,8 @@
         <StackPanel Orientation="Horizontal">
             <Button x:Name="AddData" Click="AddData_Click">Добавить клиента</Button>
             <Button x:Name="DeleteData" Click="DeleteData_Click">Удалить клиента</Button>
+
+            <ComboBox Name="CmbFilter" SelectionChanged="CmbFilter_SelectionChanged" SelectedIndex="0" ItemsSource="{Binding Gender}" DisplayMemberPath="Name"></ComboBox>
         </StackPanel>
         <DataGrid x:Name="dgClients" AutoGenerateColumns="False" ColumnWidth="*" IsReadOnly="True" Grid.Row="1">
             <DataGrid.Columns>

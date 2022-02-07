@@ -34,6 +34,7 @@ namespace WpfApp1
             countPages = context.Clients.Count() / 10;
             currentPage = 1;
             CurrentPage.Text = currentPage + " из " + countPages;
+            CmbFilter.ItemsSource = context.Genders.ToList();
         }
 
         private void AddData_Click(object sender, RoutedEventArgs e)
@@ -48,7 +49,24 @@ namespace WpfApp1
         }
         private void ShowTable()
         {
-            dgClients.ItemsSource = context.Clients.Take(countRecord).ToList();
+            if (CmbFilter.SelectedItem == null)
+                return;
+            var gender = CmbFilter.SelectedItem as Gender;
+            List<Client> clients = context.Clients.ToList();
+            if (cmbSelectCount.SelectedIndex == 3)
+            {
+                clients = context.Clients.ToList();
+                countPages = 1;
+            }
+            else
+            {
+                clients = context.Clients.Where(x => x.Gender.Code == gender.Code).OrderBy(x => x.ID).Skip(currentPage * countRecord - countRecord).Take(countRecord).ToList();
+                countPages = context.Clients.Where(x => x.Gender.Code == gender.Code).Count() / countRecord;
+            }
+            
+            setEnableButtons(countPages);
+            CurrentPage.Text = currentPage + " из " + countPages;
+            dgClients.ItemsSource = clients;
         }
 
         private void cmbSelectCount_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -59,21 +77,16 @@ namespace WpfApp1
             switch (cmbSelectCount.SelectedIndex)
             {
                 case 0:
-
                     countRecord = 10;
-                    countPages = context2.Clients.Count() / countRecord;
+
                     break;
                 case 1:
                     countRecord = 50;
-                    countPages = context2.Clients.Count() / countRecord;
 
                     break;
                 case 2:
                    
                     countRecord = 200;
-                    countPages = context2.Clients.Count() / countRecord;
-                    if (countPages == 0)
-                        countPages = 1;
                     break;
                 default:
                     countRecord = context2.Clients.Count();
@@ -88,8 +101,7 @@ namespace WpfApp1
             if (currentPage > 1 && currentPage <= countPages)
             {
                 currentPage--;
-                dgClients.ItemsSource = context.Clients.OrderBy(x => x.ID).Skip(currentPage * countRecord-countRecord).Take(countRecord).ToList();
-                CurrentPage.Text = currentPage + " из " + countPages;
+                ShowTable();
                 NextPage.IsEnabled = true;
                 if(currentPage == 1)
                 {
@@ -103,9 +115,9 @@ namespace WpfApp1
         {
             if (currentPage < countPages)
             {
-                dgClients.ItemsSource = context.Clients.OrderBy(x=>x.ID).Skip(currentPage*countRecord).Take(countRecord).ToList();
+                
                 currentPage++;
-                CurrentPage.Text = currentPage + " из " + countPages;
+                ShowTable();
                 PrevPage.IsEnabled = true;
                 if (currentPage == countPages)
                 {
@@ -115,18 +127,31 @@ namespace WpfApp1
             
         }
 
-        private void showRecord_Click(object sender, RoutedEventArgs e)
+        private void setEnableButtons(int pages)
         {
-            if (countPages == 1)
+            if (countPages == 1 || countPages == 0)
             {
                 PrevPage.IsEnabled = false;
                 NextPage.IsEnabled = false;
-            } else
+                countPages = 1;
+            }
+            else
             {
                 PrevPage.IsEnabled = true;
                 NextPage.IsEnabled = true;
             }
-            CurrentPage.Text = currentPage + " из " + countPages;
+
+                
+        }
+        private void showRecord_Click(object sender, RoutedEventArgs e)
+        {
+            setEnableButtons(countPages);
+            ShowTable();
+        }
+
+        private void CmbFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            currentPage = 1;
             ShowTable();
         }
     }
