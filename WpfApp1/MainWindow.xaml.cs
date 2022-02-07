@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,13 +49,14 @@ namespace WpfApp1
         {
 
         }
+        public List<Client> clients;
         private void ShowTable()
         {
             if (CmbFilter.SelectedItem == null)
                 return;
             
             var gender = CmbFilter.SelectedItem as Gender;
-            List<Client> clients = context.Clients.ToList();
+            clients = context.Clients.ToList();
             if (cmbSelectCount.SelectedIndex == 3)
             {
                 clients = context.Clients.ToList();
@@ -171,6 +174,29 @@ namespace WpfApp1
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ShowTable();
+        }
+
+        private void BtnSortFirstName_Click(object sender, RoutedEventArgs e)
+        {
+            dgClients.ItemsSource = clients.OrderBy(x=>x.FirstName).ToList();
+        }
+
+        private void BtnSortLastDate_Click(object sender, RoutedEventArgs e)
+        {
+
+            dgClients.Items.SortDescriptions.Clear();
+            dgClients.Items.SortDescriptions.Add(new SortDescription("lastDate", ListSortDirection.Descending));
+            dgClients.Items.Refresh();
+        }
+
+        private void BtnSortCount_Click(object sender, RoutedEventArgs e)
+        {
+            dgClients.Items.SortDescriptions.Clear();
+            dgClients.Items.SortDescriptions.Add(new SortDescription("countVisit", ListSortDirection.Descending));
+            dgClients.Items.Refresh();
+
+
+
         }
     }
 }

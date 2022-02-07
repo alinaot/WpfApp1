@@ -20,6 +20,9 @@
             <TextBox Width="100" Text="{Binding FullName}" TextChanged="TextBox_TextChanged" Name="txtName"/>
             <TextBox Width="100" Text="{Binding Email}" TextChanged="TextBox_TextChanged" Name="txtEmail"/>
             <TextBox Width="100" Text="{Binding Phone}" TextChanged="TextBox_TextChanged" Name="txtPhone"/>
+            <Button x:Name="BtnSortFirstName" Click="BtnSortFirstName_Click" Content="firstName a-z"/>
+            <Button x:Name="BtnSortLastDate" Click="BtnSortLastDate_Click"  Content="last date a-z"/>
+            <Button x:Name="BtnSortCount" Click="BtnSortCount_Click"  Content="count a-z"/>
         </StackPanel>
         <DataGrid x:Name="dgClients" AutoGenerateColumns="False" ColumnWidth="*" IsReadOnly="True" Grid.Row="1">
             <DataGrid.Columns>
@@ -31,9 +34,9 @@
                 <DataGridTextColumn Header="Birthday" Binding="{Binding Birthday}"/>
                 <DataGridTextColumn Header="Phone" Binding="{Binding Phone}"/>
                 <DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
-                <DataGridTextColumn Header="RegistrationDate" Binding="{Binding RegistrationDate}"/>
-                <DataGridTextColumn Header="LastDate"/>
-                <DataGridTextColumn Header="CountVisit"/>
+                <DataGridTextColumn Header="RegistrationDate" Binding="{Binding RegistrationDate}" />
+                <DataGridTextColumn Header="LastDate" x:Name="lastDate"/>
+                <DataGridTextColumn Header="CountVisit" x:Name="countVisit"/>
                 <DataGridTemplateColumn Header="Tags">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
