@@ -21,9 +21,9 @@ namespace WpfApp1.Model
             this.Clients = new HashSet<Client>();
         }
     
-        public int ID { get; set; }
-        public string Title { get; set; }
-        public string Color { get; set; }
+        public int ID { get; set; }//1
+        public string Title { get; set; }//tag1
+        public string Color { get; set; }//Red
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Client> Clients { get; set; }
@@ -32,7 +32,7 @@ namespace WpfApp1.Model
             get
             {
                 SolidColorBrush value = Brushes.Gray;
-                Color color = (Color)ColorConverter.ConvertFromString(Color);
+                Color color = (Color)ColorConverter.ConvertFromString(Color);//Red
                 value = new SolidColorBrush(color);
                 return value;
             }

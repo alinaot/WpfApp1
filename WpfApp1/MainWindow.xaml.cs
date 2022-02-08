@@ -41,8 +41,8 @@ namespace WpfApp1
 
         private void AddData_Click(object sender, RoutedEventArgs e)
         {
-
-
+            
+            
         }
 
         private void DeleteData_Click(object sender, RoutedEventArgs e)
@@ -77,8 +77,9 @@ namespace WpfApp1
                                                 ||x.LastName.ToLower().Contains(txtName.Text.ToLower()) 
                                                 ||x.Patronymic.ToLower().Contains(txtName.Text.ToLower())).ToList();
                 }
-                clients = clients.Where(x => x.Gender.Code == gender.Code).OrderBy(x => x.ID).Skip(currentPage * countRecord - countRecord).Take(countRecord).ToList();
-                countPages = context.Clients.Where(x => x.Gender.Code == gender.Code).Count() / countRecord;
+                clients = clients.Where(x => x.Gender.Code == gender.Code).OrderBy(x => 
+                                    x.ID).Skip(currentPage * countRecord - countRecord).Take(countRecord).ToList();
+                countPages = context.Clients.Where(x => x.Gender.Code == gender.Code).Count() / countRecord;//100/10=10
 
             setEnableButtons();
             CurrentPage.Text = currentPage + " из " + countPages;
@@ -116,7 +117,7 @@ namespace WpfApp1
             
             if (currentPage > 1 && currentPage <= countPages)
             {
-                currentPage--;
+                currentPage--;//-1
                 ShowTable();
                 NextPage.IsEnabled = true;
                 if(currentPage == 1)
@@ -132,7 +133,7 @@ namespace WpfApp1
             if (currentPage < countPages)
             {
                 
-                currentPage++;
+                currentPage++;//+1
                 ShowTable();
                 PrevPage.IsEnabled = true;
                 if (currentPage == countPages)
@@ -183,7 +184,6 @@ namespace WpfApp1
 
         private void BtnSortLastDate_Click(object sender, RoutedEventArgs e)
         {
-
             dgClients.Items.SortDescriptions.Clear();
             dgClients.Items.SortDescriptions.Add(new SortDescription("lastDate", ListSortDirection.Descending));
             dgClients.Items.Refresh();
@@ -194,9 +194,6 @@ namespace WpfApp1
             dgClients.Items.SortDescriptions.Clear();
             dgClients.Items.SortDescriptions.Add(new SortDescription("countVisit", ListSortDirection.Descending));
             dgClients.Items.Refresh();
-
-
-
         }
     }
 }
